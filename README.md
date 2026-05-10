@@ -62,7 +62,7 @@ StartState → [AsciiState | DotState | StarState | PlusState] → ... → Termi
 ### Запуск
  
 ```bash
-python regex_fsm.py
+python regex.py
 ```
  
 ### Запуск власного прикладу
