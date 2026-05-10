@@ -23,20 +23,20 @@ class State(ABC):
 
 
 class StartState(State):
-    next_states: list[State] = []
 
     def __init__(self):
         super().__init__()
+        self.next_states = []
 
-    def check_self(self, char):
-        return super().check_self(char)
+    def check_self(self, char: str) -> bool:
+        return False
 
 
 class TerminationState(State):
-    next_states: list[State] = []
 
     def __init__(self):
         super().__init__()
+        self.next_states = []
 
     def check_self(self, char: str) -> bool:
         return False
@@ -47,12 +47,11 @@ class DotState(State):
     state for . character (any character accepted)
     """
 
-    next_states: list[State] = []
-
     def __init__(self):
         super().__init__()
+        self.next_states = []
 
-    def check_self(self, char: str):
+    def check_self(self, char: str) -> bool:
         return True
 
 
@@ -61,13 +60,11 @@ class AsciiState(State):
     state for alphabet letters or numbers
     """
 
-    next_states: list[State] = []
-    curr_sym = ""
-
     def __init__(self, symbol: str) -> None:
         super().__init__()
         if not (symbol.isascii() and len(symbol) == 1 and (symbol.isalpha() or symbol.isdigit())):
             raise AttributeError(f"Symbol '{symbol}' is not supported")
+        self.next_states = []
         self.curr_sym = symbol
 
     def check_self(self, curr_char: str) -> bool:
@@ -75,8 +72,6 @@ class AsciiState(State):
 
 
 class StarState(State):
-
-    next_states: list[State] = []
 
     def __init__(self, checking_state: State):
         super().__init__()
@@ -86,12 +81,10 @@ class StarState(State):
         for state in self.next_states:
             if state.check_self(char):
                 return True
-
         return False
 
 
 class PlusState(State):
-    next_states: list[State] = []
 
     def __init__(self, checking_state: State):
         super().__init__()
@@ -105,10 +98,9 @@ class PlusState(State):
 
 
 class RegexFSM:
-    curr_state: State = StartState()
 
     def __init__(self, regex_expr: str) -> None:
-
+        self.curr_state = StartState()
         prev_state = self.curr_state
         tmp_next_state = self.curr_state
 
