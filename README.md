@@ -68,7 +68,7 @@ python regex.py
 ### Запуск власного прикладу
  
 ```python
-from regex_fsm import RegexFSM
+from regex import RegexFSM
  
 pattern = RegexFSM("a+b*c")
 print(pattern.check_string("aabc"))   # True
